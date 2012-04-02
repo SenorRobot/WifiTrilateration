@@ -50,6 +50,7 @@ def scanLoop():
 
 		#open file into lines
 		f = open('scanout.txt')
+		fout = open('testout.txt','w')
 		counter=0
 		for line in f:
 		#skip first two lines - they are headers of the table
@@ -74,7 +75,7 @@ def scanLoop():
 				#format and publish to ros topic
 				str="{0}\t{1}\t{2}\t{3}\t{4}\t{5}".format(mac,signal,x,y,z,ssid)
 				pub.publish(String(str))
-		
+				fout.write(str)
 			else: counter+=1
 		#Just for testing, replace with distance/speed based loop interval		
 		rospy.sleep(10.0)

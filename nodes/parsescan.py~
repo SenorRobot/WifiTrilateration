@@ -69,7 +69,7 @@ def scanLoop():
 					signal=0 #above this dbm is assumed to be right at the AP
 				else:
 					signal = ((-1 * signal) - 39)/3
-				print "Signal {0} = {1}m".format(lineInfo[2],signal)
+				#print "Signal {0} = {1}m".format(lineInfo[2],signal) #Test output
 				ssid=lineInfo[4]
 				#format and publish to ros topic
 				str="{0}\t{1}\t{2}\t{3}\t{4}\t{5}".format(mac,signal,x,y,z,ssid)
