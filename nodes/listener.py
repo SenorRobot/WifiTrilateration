@@ -8,7 +8,8 @@ from pylab import *
 
 
 #global dictionary used here
-apData = dict()
+apData = dict() #Storage of scan information
+apLocs = dict() #storage of locations
 def callback(data):
 	#this means data has been obtained from the listener
 	#parse data into components and place in dictionary
@@ -84,6 +85,7 @@ def calcAPLocation(mac,pointNum):
 		#radii_p = np.array(radii)				
 		point= optimize.leastsq(calcResiduals, ptGuess, args = (xi,yi,radii))
 		print point
+		apLocs[mac] = point
 	print "\n"	
 	print "End of Calculation"
 
@@ -108,6 +110,13 @@ def calcResiduals(ptGuess, xi, yi, radii):
 	#residuals is distance from (xii,yii) to (xg, yg)
 	return (xii-xg)**2 + (yii-yg)**2	
 
+
+#Take the dictionary of all access points and average the locations of 
+#Access points that are physically the same
+#This is based off the RIT network, where the mac addresses differ
+#in only the last 4 bits.
+def mergeAPs():
+	return
 def listener():
     rospy.init_node('listener', anonymous=True)
     rospy.Subscriber("aps", String, callback)
