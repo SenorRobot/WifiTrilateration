@@ -30,6 +30,9 @@ def callback(data):
 	#now perform the analysis on each of the ap entries
 	pointNum=len(apData[mac])
 	calcAPLocation(mac, pointNum)
+	copyAps = dict(apLocs)
+	copyAps=mergeAPs()
+	broadcastAPs(copyAps
 
 def loadFileData(filename):
 	rospy.init_node('listener', anonymous=True)	
@@ -155,5 +158,5 @@ def listener():
     rospy.spin()
 
 if __name__ == '__main__':
-    #listener()
-    loadFileData("test1.txt")
+    listener()
+    #loadFileData("test1.txt")

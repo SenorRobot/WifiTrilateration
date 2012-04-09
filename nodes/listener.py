@@ -32,7 +32,7 @@ def callback(data):
 	calcAPLocation(mac, pointNum)
 	copyAps = dict(apLocs)
 	copyAps=mergeAPs()
-	broadcastAPs(copyAps
+	broadcastAPs(copyAps)
 
 def loadFileData(filename):
 	rospy.init_node('listener', anonymous=True)	
