@@ -11,5 +11,5 @@
   <depend package="std_msgs"/>
   <depend package="rospy"/>
   <depend package="roscpp"/>
-  <depend package="tf"/>
+  <rosdep name="tf"/>
 </package> 

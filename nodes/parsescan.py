@@ -12,11 +12,18 @@
 # 2/15/12:
 # Added Tab Based Parsing
 # Started Export to Calculating File
+#
+# March:
+# Added Stuff
+#
+# 4/5/12:
+# Started adding transform integration to get location from robot
 
 import os
 import string
 import roslib; roslib.load_manifest('wifiScanner')
 import rospy
+import tf
 from std_msgs.msg import String
 import random
 
@@ -24,30 +31,31 @@ def scanLoop():
 	#Start Ros loop
 	pub=rospy.Publisher('aps',String)
 	rospy.init_node('wifiTalker')
+	#Transform Listener
+	listener = tf.TransformListener()
+	rate = rospy.Rate(10.0)
+
 	while not rospy.is_shutdown():	
 	#Get current location from vehicle
 	#store in 3 ints (x,y,z)
 		x=0.0
 		y=0.0
 		z=0.0
-	#TESTING: Randomize x,y from -20 to 20
-		x=random.random()
-		if(x<0.5):
-			x*=-40
-		else:
-			x-=0.5
-			x*=40
-		y=random.random()
-		if(y<0.5):
-			y*=-40
-		else:
-			y-=0.5
-			y*=40
+	#Get from vehicle
+		try:
+			(trans,rot) = listener.lookupTransform('/wifiAntenna','/odom',rospy.Time(0))
+			print trans
+			x=trans[0]
+			y=trans[1]
+			z=trans[2]
+		except (tf.LookupException, tf.ConnectivityException):
+			continue
+		
 	#Run scan of all wireless access points
+		print "Starting Parsing"
 		os.system("sudo wpa_cli scan") #force refresh of scan
 		os.system("sudo wpa_cli scan_results > scanout.txt")
 		#Parse the output
-
 		#open file into lines
 		f = open('scanout.txt')
 		fout = open('testout.txt','w')

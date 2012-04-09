@@ -5,11 +5,12 @@ from std_msgs.msg import String
 import numpy as np
 import scipy.optimize as optimize
 from pylab import *
-
+import tf
 
 #global dictionary used here
 apData = dict() #Storage of scan information
 apLocs = dict() #storage of locations
+
 def callback(data):
 	#this means data has been obtained from the listener
 	#parse data into components and place in dictionary
@@ -29,8 +30,12 @@ def callback(data):
 	#now perform the analysis on each of the ap entries
 	pointNum=len(apData[mac])
 	calcAPLocation(mac, pointNum)
+	copyAps = dict(apLocs)
+	copyAps=mergeAPs()
+	broadcastAPs(copyAps
 
 def loadFileData(filename):
+	rospy.init_node('listener', anonymous=True)	
 	#loads data points from a file instead of from ros topic
 	fin=open(filename)
 	for data in fin:
@@ -52,10 +57,12 @@ def loadFileData(filename):
 		#now perform the analysis on each of the ap entries
 		pointNum=len(apData[mac])
 		calcAPLocation(mac, pointNum)
+		copyAps = dict(apLocs)
+		copyAps=mergeAPs()
+		broadcastAPs(copyAps)
 
 #Calculate the Location of the access point with MAC Address mac
 def calcAPLocation(mac,pointNum):
-	print "Starting Calculation of {}".format(mac)
 	#if there are more than 2 data points for each AP, then we can perform the calculation
 	#print "{0}\t{1}".format(mac,len(apData[mac]))
 	if pointNum>=2:
@@ -84,10 +91,12 @@ def calcAPLocation(mac,pointNum):
 		#yi_p = np.array(yi)
 		#radii_p = np.array(radii)				
 		point= optimize.leastsq(calcResiduals, ptGuess, args = (xi,yi,radii))
-		print point
-		apLocs[mac] = point
+		#print point
+		apLocs[mac] = [0,0,0]
+		apLocs[mac][0]=point[0][0]
+		apLocs[mac][1]=point[0][1]
 	print "\n"	
-	print "End of Calculation"
+	
 
 
 #Function that calculates and generates the residuals for a function
@@ -116,12 +125,38 @@ def calcResiduals(ptGuess, xi, yi, radii):
 #This is based off the RIT network, where the mac addresses differ
 #in only the last 4 bits.
 def mergeAPs():
+	#go through all mac addresses in dictionary
+	copyAps=dict(apLocs)
+	for mac in copyAps.keys():
+		for mac2 in copyAps.keys():
+			#If same except last 4 bits(last hex char)
+			if mac[:-1] == mac2[:-1] and mac != mac2:
+				#Average together and store in mac
+				if mac in copyAps and mac2 in copyAps:
+					copyAps[mac][0] = (apLocs[mac][0]+apLocs[mac2][0])/2.0
+					copyAps[mac][1] = (apLocs[mac][1]+apLocs[mac2][1])/2.0
+					copyAps[mac][2] = (apLocs[mac][2]+apLocs[mac2][2])/2.0
+					#remove mac2
+					copyAps.pop(mac2)
+	return copyAps
+
+#Broadcast all of the access point locations
+#as ros transforms relative to the base
+def broadcastAPs(copyAps):
+	bc = tf.TransformBroadcaster()
+	for mac in copyAps:
+		bc.sendTransform((copyAps[mac][0],copyAps[mac][1],copyAps[mac][2]),
+				tf.transformations.quaternion_from_euler(0,0,0),
+				rospy.Time.now(),
+				mac,
+				"odom")
 	return
+
 def listener():
     rospy.init_node('listener', anonymous=True)
     rospy.Subscriber("aps", String, callback)
     rospy.spin()
 
 if __name__ == '__main__':
-    #listener()
-	loadFileData("test1.txt")
+    listener()
+    #loadFileData("test1.txt")

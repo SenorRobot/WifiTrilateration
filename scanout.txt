@@ -1,0 +1,24 @@
+Selected interface 'wlan0'
+bssid / frequency / signal level / flags / ssid
+00:22:90:95:f4:b1	2437	-50	[WPA-EAP-TKIP][ESS]	ritwpa
+00:22:90:95:f4:b2	2437	-51	[WPA2-EAP-CCMP][ESS]	ritwpa2
+00:22:90:95:f6:12	2462	-61	[WPA2-EAP-CCMP][ESS]	ritwpa2
+00:22:90:93:80:c1	2412	-78	[WPA-EAP-TKIP][ESS]	ritwpa
+00:22:90:95:ec:d1	2437	-74	[WPA-EAP-TKIP][ESS]	ritwpa
+00:22:90:95:f4:b0	2437	-44	[ESS]	rit
+00:22:90:95:f6:10	2462	-56	[ESS]	rit
+00:22:90:95:ec:d2	2437	-74	[WPA2-EAP-CCMP][ESS]	ritwpa2
+00:22:90:95:ef:12	2437	-74	[WPA2-EAP-CCMP][ESS]	ritwpa2
+00:22:90:95:da:b2	2462	-81	[WPA2-EAP-CCMP][ESS]	ritwpa2
+00:22:90:93:80:c2	2412	-80	[WPA2-EAP-CCMP][ESS]	ritwpa2
+00:22:90:95:ec:d0	2437	-76	[ESS]	rit
+00:22:90:95:ef:10	2437	-74	[ESS]	rit
+00:22:90:93:80:c0	2412	-80	[ESS]	rit
+00:22:90:95:f6:11	2462	-55	[WPA-EAP-TKIP][ESS]	ritwpa
+00:22:90:95:da:b1	2462	-83	[WPA-EAP-TKIP][ESS]	ritwpa
+00:22:90:95:f3:30	2412	-78	[ESS]	rit
+00:22:90:95:f3:32	2412	-84	[WPA2-EAP-CCMP][ESS]	ritwpa2
+00:22:90:95:e2:91	2462	-81	[WPA-EAP-TKIP][ESS]	ritwpa
+00:22:90:95:f3:31	2412	-83	[WPA-EAP-TKIP][ESS]	ritwpa
+00:22:90:93:7e:72	2437	-84	[WPA2-EAP-CCMP][ESS]	ritwpa2
+00:18:4d:7f:ae:04	2462	-63	[WEP][ESS]	WICam
