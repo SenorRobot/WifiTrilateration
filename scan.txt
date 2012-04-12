@@ -1,0 +1,27 @@
+wlan0     Scan completed :
+          Cell 01 - Address: 00:22:90:95:F4:BF
+                    Channel:52
+                    Frequency:5.26 GHz (Channel 52)
+                    Quality=70/70  Signal level=-36 dBm  
+                    Encryption key:off
+                    ESSID:"rit"
+                    Bit Rates:12 Mb/s; 18 Mb/s; 24 Mb/s; 36 Mb/s; 48 Mb/s
+                              54 Mb/s
+                    Mode:Master
+                    Extra:tsf=0000011e485384e7
+                    Extra: Last beacon: 17756ms ago
+                    IE: Unknown: 0003726974
+                    IE: Unknown: 01069824B04860EC
+                    IE: Unknown: 071255532024041134041864051884031895051E
+                    IE: Unknown: 0B0505000F8D5B
+                    IE: Unknown: 2D1A6E181BFFFF000000000000000000000000000000000000000000
+                    IE: Unknown: 3D1634000700000000000000000000000000000000000000
+                    IE: Unknown: 851E07008F000F00FF0359004150303032322E393039302E6134350005000035
+                    IE: Unknown: 9606004096000E00
+                    IE: Unknown: DD180050F2020101800003A4000027A4000042435E0062322F00
+                    IE: Unknown: DD06004096010104
+                    IE: Unknown: DD050040960305
+                    IE: Unknown: DD050040960B09
+                    IE: Unknown: DD050040961400
+                    IE: Unknown: DD16000B85F800014F845D50B7BEBDFF759F348D8B6A1D6C
+
