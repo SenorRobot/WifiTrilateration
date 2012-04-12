@@ -84,7 +84,6 @@ def scanLoop():
 				str="{0}\t{1}\t{2}\t{3}\t{4}\t{5}".format(mac,signal,x,y,z,ssid)
 				pub.publish(String(str))
 				fout.write(str)
-				print str
 			else: counter+=1
 		#Just for testing, replace with distance/speed based loop interval		
 		rospy.sleep(10.0)

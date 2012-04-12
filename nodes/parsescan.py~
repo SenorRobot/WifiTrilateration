@@ -42,26 +42,24 @@ def scanLoop():
 		y=0.0
 		z=0.0
 	#Get from vehicle
-		#try:
-		#	(trans,rot) = listener.lookupTransform('/wifiAntenna','/odom',rospy.Time(0))
-		#	print trans
-		#	x=trans[0]
-		#	y=trans[1]
-		#	z=trans[2]
-		#except (tf.LookupException, tf.ConnectivityException):
-		#	continue
+		try:
+			(trans,rot) = listener.lookupTransform('/wifiAntenna','/odom',rospy.Time(0))
+			print trans
+			x=trans[0]
+			y=trans[1]
+			z=trans[2]
+		except (tf.LookupException, tf.ConnectivityException):
+			continue
 		
 	#Run scan of all wireless access points
 		#os.system("sudo wpa_cli scan") #force refresh of scan
 		#os.system("sudo wpa_cli scan_results > scanout.txt")
-		print "Scanning"
 		os.system("sudo iwlist scanning | python iwlistparse.py > scanout.txt")
 		#Parse the output
 		#open file into lines
 		f = open('scanout.txt')
 		fout = open('testout.txt','w')
 		counter=0
-		print "Done Scan"
 		for line in f:
 		#skip first two lines - they are headers of the table
 			if(counter>=1): 
