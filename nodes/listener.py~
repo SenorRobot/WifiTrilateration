@@ -12,6 +12,7 @@ apData = dict() #Storage of scan information
 apLocs = dict() #storage of locations
 
 def callback(data):
+	print "Got Data!"
 	#this means data has been obtained from the listener
 	#parse data into components and place in dictionary
 	dataInfo=data.data.split()
@@ -32,7 +33,7 @@ def callback(data):
 	calcAPLocation(mac, pointNum)
 	copyAps = dict(apLocs)
 	copyAps=mergeAPs()
-	broadcastAPs(copyAps
+	broadcastAPs(copyAps)
 
 def loadFileData(filename):
 	rospy.init_node('listener', anonymous=True)	

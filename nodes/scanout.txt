@@ -1,6 +1,15 @@
-Address             Channel   Signal   Encryption   Name    
-00:18:4D:7F:AE:04   11        -58      WEP          WICam   
-00:22:90:93:80:C1   1         -77      WPA v.1      ritwpa  
-00:22:90:95:F3:31   1         -82      WPA v.1      ritwpa  
-00:22:90:95:F4:B0   6         -44      Open         rit     
-00:22:90:95:F6:10   11        -59      Open         rit     
+Address             Channel   Signal   Encryption   Name     
+00:18:4D:7F:AE:04   11        -56      WEP          WICam    
+00:22:90:93:7E:71   6         -78      WPA v.1      ritwpa   
+00:22:90:93:7E:72   6         -79      WEP          ritwpa2  
+00:22:90:93:80:C1   1         -82      WPA v.1      ritwpa   
+00:22:90:95:DA:B0   11        -83      Open         rit      
+00:22:90:95:E2:91   11        -84      WPA v.1      ritwpa   
+00:22:90:95:EC:D0   6         -71      Open         rit      
+00:22:90:95:EC:D2   6         -74      WEP          ritwpa2  
+00:22:90:95:EF:10   6         -65      Open         rit      
+00:22:90:95:F3:31   1         -80      WPA v.1      ritwpa   
+00:22:90:95:F4:B0   6         -45      Open         rit      
+00:22:90:95:F4:B1   6         -43      WPA v.1      ritwpa   
+00:22:90:95:F4:B2   6         -44      WEP          ritwpa2  
+00:22:90:95:F6:10   11        -55      Open         rit      

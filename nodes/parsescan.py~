@@ -42,35 +42,37 @@ def scanLoop():
 		y=0.0
 		z=0.0
 	#Get from vehicle
-		try:
-			(trans,rot) = listener.lookupTransform('/wifiAntenna','/odom',rospy.Time(0))
-			print trans
-			x=trans[0]
-			y=trans[1]
-			z=trans[2]
-		except (tf.LookupException, tf.ConnectivityException):
-			continue
+		#try:
+		#	(trans,rot) = listener.lookupTransform('/wifiAntenna','/odom',rospy.Time(0))
+		#	print trans
+		#	x=trans[0]
+		#	y=trans[1]
+		#	z=trans[2]
+		#except (tf.LookupException, tf.ConnectivityException):
+		#	continue
 		
 	#Run scan of all wireless access points
 		#os.system("sudo wpa_cli scan") #force refresh of scan
 		#os.system("sudo wpa_cli scan_results > scanout.txt")
+		print "Scanning"
 		os.system("sudo iwlist scanning | python iwlistparse.py > scanout.txt")
 		#Parse the output
 		#open file into lines
 		f = open('scanout.txt')
 		fout = open('testout.txt','w')
 		counter=0
+		print "Done Scan"
 		for line in f:
 		#skip first two lines - they are headers of the table
-			if(counter>=2): 
+			if(counter>=1): 
 			#We need the Mac Address, and signal trength
 			#Mac address is first parameter in each line, signal strength is third
 				lineInfo=line.split()
 				#convert signal strength into distance
-				if '00:22:90:95:f4:b0' in lineInfo[0]: #this is just to test the estimations of distance to calibrate
-					print lineInfo[0] #MAC Address
-					print lineInfo[2] #Signal
-					print lineInfo[4] #BSSID
+				#if '00:22:90:95:f4:b0' in lineInfo[0]: #this is just to test the estimations of distance to calibrate
+				#	print lineInfo[0] #MAC Address
+				#	print lineInfo[2] #Signal
+				#	print lineInfo[4] #BSSID
 				mac=lineInfo[0]
 				signal=int(lineInfo[2])
 				#signal strength: Current calibration is -39 - (3*m)
@@ -84,6 +86,7 @@ def scanLoop():
 				str="{0}\t{1}\t{2}\t{3}\t{4}\t{5}".format(mac,signal,x,y,z,ssid)
 				pub.publish(String(str))
 				fout.write(str)
+				print str
 			else: counter+=1
 		#Just for testing, replace with distance/speed based loop interval		
 		rospy.sleep(10.0)

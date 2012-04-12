@@ -67,10 +67,10 @@ def scanLoop():
 			#Mac address is first parameter in each line, signal strength is third
 				lineInfo=line.split()
 				#convert signal strength into distance
-				if '00:22:90:95:f4:b0' in lineInfo[0]: #this is just to test the estimations of distance to calibrate
-					print lineInfo[0] #MAC Address
-					print lineInfo[2] #Signal
-					print lineInfo[4] #BSSID
+				#if '00:22:90:95:f4:b0' in lineInfo[0]: #this is just to test the estimations of distance to calibrate
+				#	print lineInfo[0] #MAC Address
+				#	print lineInfo[2] #Signal
+				#	print lineInfo[4] #BSSID
 				mac=lineInfo[0]
 				signal=int(lineInfo[2])
 				#signal strength: Current calibration is -39 - (3*m)
@@ -84,6 +84,7 @@ def scanLoop():
 				str="{0}\t{1}\t{2}\t{3}\t{4}\t{5}".format(mac,signal,x,y,z,ssid)
 				pub.publish(String(str))
 				fout.write(str)
+				print str
 			else: counter+=1
 		#Just for testing, replace with distance/speed based loop interval		
 		rospy.sleep(10.0)
