@@ -52,9 +52,9 @@ def scanLoop():
 			continue
 		
 	#Run scan of all wireless access points
-		print "Starting Parsing"
-		os.system("sudo wpa_cli scan") #force refresh of scan
-		os.system("sudo wpa_cli scan_results > scanout.txt")
+		#os.system("sudo wpa_cli scan") #force refresh of scan
+		#os.system("sudo wpa_cli scan_results > scanout.txt")
+		os.system("sudo iwlist scanning | python iwlistparse.py > scanout.txt")
 		#Parse the output
 		#open file into lines
 		f = open('scanout.txt')
@@ -62,7 +62,7 @@ def scanLoop():
 		counter=0
 		for line in f:
 		#skip first two lines - they are headers of the table
-			if(counter>=2): 
+			if(counter>=1): 
 			#We need the Mac Address, and signal trength
 			#Mac address is first parameter in each line, signal strength is third
 				lineInfo=line.split()
