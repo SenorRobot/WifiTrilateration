@@ -1,0 +1,146 @@
+wlan1     Scan completed :
+          Cell 01 - Address: 00:22:90:95:EC:D1
+                    ESSID:"ritwpa"
+                    Protocol:IEEE 802.11bg
+                    Mode:Master
+                    Frequency:2.437 GHz (Channel 6)
+                    Encryption key:on
+                    Bit Rates:11 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s; 36 Mb/s
+                              48 Mb/s; 54 Mb/s
+                    Extra:wpa_ie=dd180050f20101000050f20201000050f20201000050f2010000
+                    IE: WPA Version 1
+                        Group Cipher : TKIP
+                        Pairwise Ciphers (1) : TKIP
+                        Authentication Suites (1) : 802.1x
+                    Signal level=56/100  
+          Cell 02 - Address: 00:22:90:95:EC:D2
+                    ESSID:"ritwpa2"
+                    Protocol:IEEE 802.11bgn
+                    Mode:Master
+                    Frequency:2.437 GHz (Channel 6)
+                    Encryption key:on
+                    Bit Rates:11 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s; 36 Mb/s
+                              48 Mb/s; 54 Mb/s
+                    Extra:rsn_ie=30140100000fac040100000fac040100000fac012800
+                    IE: IEEE 802.11i/WPA2 Version 1
+                        Group Cipher : CCMP
+                        Pairwise Ciphers (1) : CCMP
+                        Authentication Suites (1) : 802.1x
+                    Signal level=55/100  
+          Cell 03 - Address: 00:22:90:95:EF:10
+                    ESSID:"rit"
+                    Protocol:IEEE 802.11bgn
+                    Mode:Master
+                    Frequency:2.437 GHz (Channel 6)
+                    Encryption key:off
+                    Bit Rates:11 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s; 36 Mb/s
+                              48 Mb/s; 54 Mb/s
+                    Signal level=58/100  
+          Cell 04 - Address: 00:22:90:95:F4:B1
+                    ESSID:"ritwpa"
+                    Protocol:IEEE 802.11bg
+                    Mode:Master
+                    Frequency:2.437 GHz (Channel 6)
+                    Encryption key:on
+                    Bit Rates:11 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s; 36 Mb/s
+                              48 Mb/s; 54 Mb/s
+                    Extra:wpa_ie=dd180050f20101000050f20201000050f20201000050f2010000
+                    IE: WPA Version 1
+                        Group Cipher : TKIP
+                        Pairwise Ciphers (1) : TKIP
+                        Authentication Suites (1) : 802.1x
+                    Signal level=92/100  
+          Cell 05 - Address: 00:22:90:95:EF:12
+                    ESSID:"ritwpa2"
+                    Protocol:IEEE 802.11bgn
+                    Mode:Master
+                    Frequency:2.437 GHz (Channel 6)
+                    Encryption key:on
+                    Bit Rates:11 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s; 36 Mb/s
+                              48 Mb/s; 54 Mb/s
+                    Extra:rsn_ie=30140100000fac040100000fac040100000fac012800
+                    IE: IEEE 802.11i/WPA2 Version 1
+                        Group Cipher : CCMP
+                        Pairwise Ciphers (1) : CCMP
+                        Authentication Suites (1) : 802.1x
+                    Signal level=46/100  
+          Cell 06 - Address: 00:22:90:95:F4:B0
+                    ESSID:"rit"
+                    Protocol:IEEE 802.11bgn
+                    Mode:Master
+                    Frequency:2.437 GHz (Channel 6)
+                    Encryption key:off
+                    Bit Rates:11 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s; 36 Mb/s
+                              48 Mb/s; 54 Mb/s
+                    Signal level=96/100  
+          Cell 07 - Address: 00:22:90:95:EC:D0
+                    ESSID:"rit"
+                    Protocol:IEEE 802.11bgn
+                    Mode:Master
+                    Frequency:2.437 GHz (Channel 6)
+                    Encryption key:off
+                    Bit Rates:11 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s; 36 Mb/s
+                              48 Mb/s; 54 Mb/s
+                    Signal level=56/100  
+          Cell 08 - Address: 00:22:90:95:F4:B2
+                    ESSID:"ritwpa2"
+                    Protocol:IEEE 802.11bgn
+                    Mode:Master
+                    Frequency:2.437 GHz (Channel 6)
+                    Encryption key:on
+                    Bit Rates:11 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s; 36 Mb/s
+                              48 Mb/s; 54 Mb/s
+                    Extra:rsn_ie=30140100000fac040100000fac040100000fac012800
+                    IE: IEEE 802.11i/WPA2 Version 1
+                        Group Cipher : CCMP
+                        Pairwise Ciphers (1) : CCMP
+                        Authentication Suites (1) : 802.1x
+                    Signal level=96/100  
+          Cell 09 - Address: 00:18:4D:7F:AE:04
+                    ESSID:"WICam"
+                    Protocol:IEEE 802.11bg
+                    Mode:Master
+                    Frequency:2.462 GHz (Channel 11)
+                    Encryption key:on
+                    Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s; 18 Mb/s
+                              24 Mb/s; 36 Mb/s; 54 Mb/s; 6 Mb/s; 9 Mb/s
+                              12 Mb/s; 48 Mb/s
+                    Signal level=62/100  
+          Cell 10 - Address: 00:22:90:95:F6:11
+                    ESSID:"ritwpa"
+                    Protocol:IEEE 802.11bg
+                    Mode:Master
+                    Frequency:2.462 GHz (Channel 11)
+                    Encryption key:on
+                    Bit Rates:11 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s; 36 Mb/s
+                              48 Mb/s; 54 Mb/s
+                    Extra:wpa_ie=dd180050f20101000050f20201000050f20201000050f2010000
+                    IE: WPA Version 1
+                        Group Cipher : TKIP
+                        Pairwise Ciphers (1) : TKIP
+                        Authentication Suites (1) : 802.1x
+                    Signal level=76/100  
+          Cell 11 - Address: 00:22:90:95:F6:10
+                    ESSID:"rit"
+                    Protocol:IEEE 802.11bgn
+                    Mode:Master
+                    Frequency:2.462 GHz (Channel 11)
+                    Encryption key:off
+                    Bit Rates:11 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s; 36 Mb/s
+                              48 Mb/s; 54 Mb/s
+                    Signal level=74/100  
+          Cell 12 - Address: 00:22:90:95:F6:12
+                    ESSID:"ritwpa2"
+                    Protocol:IEEE 802.11bgn
+                    Mode:Master
+                    Frequency:2.462 GHz (Channel 11)
+                    Encryption key:on
+                    Bit Rates:11 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s; 36 Mb/s
+                              48 Mb/s; 54 Mb/s
+                    Extra:rsn_ie=30140100000fac040100000fac040100000fac012800
+                    IE: IEEE 802.11i/WPA2 Version 1
+                        Group Cipher : CCMP
+                        Pairwise Ciphers (1) : CCMP
+                        Authentication Suites (1) : 802.1x
+                    Signal level=62/100  
+
