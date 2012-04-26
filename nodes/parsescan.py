@@ -33,7 +33,7 @@ def scanLoop():
 	rospy.init_node('wifiTalker')
 	#Transform Listener
 	listener = tf.TransformListener()
-	rate = rospy.Rate(10.0)
+	rate = rospy.Rate(.1) #10 hertz
 
 	while not rospy.is_shutdown():	
 	#Get current location from vehicle
@@ -43,7 +43,9 @@ def scanLoop():
 		z=0.0
 	#Get from vehicle
 		try:
+			listener.waitForTransform('/wifiAntenna','/odom',rospy.Time(0), rospy.Duration(3))
 			(trans,rot) = listener.lookupTransform('/wifiAntenna','/odom',rospy.Time(0))
+			print("started!\n")
 			print trans
 			x=trans[0]
 			y=trans[1]
@@ -54,7 +56,7 @@ def scanLoop():
 	#Run scan of all wireless access points
 		#os.system("sudo wpa_cli scan") #force refresh of scan
 		#os.system("sudo wpa_cli scan_results > scanout.txt")
-		os.system("sudo iwlist scanning | python iwlistparse.py > scanout.txt")
+		os.system("sudo iwlist wlan0 scanning | python ~/ros/wifiScanner/nodes/iwlistparse.py > scanout.txt")
 		#Parse the output
 		#open file into lines
 		f = open('scanout.txt')
@@ -86,7 +88,8 @@ def scanLoop():
 				fout.write(str)
 			else: counter+=1
 		#Just for testing, replace with distance/speed based loop interval		
-		rospy.sleep(10.0)
+		#rospy.sleep(1.0)
+		rate.sleep();
 
 if __name__ =='__main__':
 	try:
