@@ -18,7 +18,9 @@ def get_quality(cell):
     return str(int(round(float(quality[0]) / float(quality[1]) * 100))).rjust(3) + " %"
 
 def get_channel(cell):
-    return matching_line(cell,"Channel:")
+    channel = matching_line(cell,"Frequency:").split()
+    #print channel
+    return channel[3][:-1]
 
 def get_encryption(cell):
     enc=""
@@ -42,8 +44,9 @@ def get_signal(cell):
 	#this splits the line with the quality and signal strength
 	#and then gets a str that is in the form "level=xxx",
 	#where xxx is the signal strength
-	signalStr=matching_line(cell,"Quality=").split()[2]
-	return signalStr[6:]
+	signalStr=matching_line(cell,"Signal level=").split('/')
+	#print "Signal Str:{0}\n".format(signalStr[0])
+	return signalStr[0]
 
 # Here's a dictionary of rules that will be applied to the description of each
 # cell. The key will be the name of the column in the table. The value is a
@@ -118,6 +121,7 @@ def print_table(table):
         print
 
 def print_cells(cells):
+    #print cells
     table=[columns]
     for cell in cells:
         cell_properties=[]
