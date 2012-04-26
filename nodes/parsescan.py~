@@ -74,17 +74,16 @@ def scanLoop():
 				mac=lineInfo[0]
 				signal=int(lineInfo[2])
 				#signal strength: Current calibration is -39 - (3*m)
-				if signal >=-39:
-					signal=0 #above this dbm is assumed to be right at the AP
+				if signal == 100:
+					signal=2 #above this dbm is assumed to be right at the AP
 				else:
-					signal = ((-1 * signal) - 39)/3
+					signal = 2 + (100-signal)/3
 				#print "Signal {0} = {1}m".format(lineInfo[2],signal) #Test output
 				ssid=lineInfo[4]
 				#format and publish to ros topic
 				str="{0}\t{1}\t{2}\t{3}\t{4}\t{5}".format(mac,signal,x,y,z,ssid)
 				pub.publish(String(str))
 				fout.write(str)
-				print str
 			else: counter+=1
 		#Just for testing, replace with distance/speed based loop interval		
 		rospy.sleep(10.0)
