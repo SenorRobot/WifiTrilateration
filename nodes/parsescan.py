@@ -56,7 +56,7 @@ def scanLoop():
 	#Run scan of all wireless access points
 		#os.system("sudo wpa_cli scan") #force refresh of scan
 		#os.system("sudo wpa_cli scan_results > scanout.txt")
-		os.system("sudo iwlist wlan0 scanning | python ~/ros/wifiScanner/nodes/iwlistparse.py > scanout.txt")
+		os.system("sudo iwlist wlan1 scanning | python ~/ros/wifiScanner/nodes/iwlistparse.py > scanout.txt")
 		#Parse the output
 		#open file into lines
 		f = open('scanout.txt')
