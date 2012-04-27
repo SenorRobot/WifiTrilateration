@@ -10,6 +10,7 @@ import tf
 #global dictionary used here
 apData = dict() #Storage of scan information
 apLocs = dict() #storage of locations
+counter=0 #counter of scans for diagnostic info
 
 def callback(data):
 	#this means data has been obtained from the listener
@@ -127,8 +128,6 @@ def calcResiduals(ptGuess, xi, yi, radii):
 def mergeAPs():
 	#go through all mac addresses in dictionary
 	copyAps=dict(apLocs)
-	print "Pre-Merge:\n"
-	print copyAps
 	for mac in copyAps.keys():
 		for mac2 in copyAps.keys():
 			#If same except last 4 bits(last hex char)
@@ -141,8 +140,8 @@ def mergeAPs():
 						copyAps[mac][2] = (apLocs[mac][2]+apLocs[mac2][2])/2.0
 						#remove mac2
 						copyAps.pop(mac2)
-						print "Merged {0} into {1}\n".format(mac2,mac)
-	print "Post-Merge\n"
+	print "Scan {0}\n".format(counter)
+	counter+=1
 	print copyAps
 	print "-------------------------------------------\n"
 	print "-------------------------------------------\n"

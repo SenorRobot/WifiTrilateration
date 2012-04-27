@@ -133,7 +133,7 @@ def mergeAPs():
 		for mac2 in copyAps.keys():
 			#If same except last 4 bits(last hex char)
 			if mac[:-1] == mac2[:-1] and mac != mac2:
-				if ((mac[-1]=='0' or mac[-1]=='1' or mac[-1]=='2') and (mac2[-1]=='0' or mac2[-1]=='1' or mac2[-1]=='2')) or ((mac[-1]=='d' or mac[-1]=='e' or mac[-1]=='f') and (mac2[-1]=='d' or mac2[-1]=='e' or mac2[-1]=='f')):
+				if ((mac[-1]=='0' or mac[-1]=='1' or mac[-1]=='2') and (mac2[-1]=='0' or mac2[-1]=='1' or mac2[-1]=='2')) or ((mac[-1]=='D' or mac[-1]=='E' or mac[-1]=='F') and (mac2[-1]=='D' or mac2[-1]=='E' or mac2[-1]=='F')):
 					#Average together and store in mac
 					if mac in copyAps and mac2 in copyAps:
 						copyAps[mac][0] = (apLocs[mac][0]+apLocs[mac2][0])/2.0
