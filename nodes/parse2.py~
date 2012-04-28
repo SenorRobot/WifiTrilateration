@@ -50,7 +50,7 @@ def scanLoop():
 			x=trans[0]
 			y=trans[1]
 			z=trans[2]
-		except (tf.LookupException, tf.ConnectivityException, tf.Exception):
+		except (tf.LookupException, tf.ConnectivityException):
 			continue
 		
 	#Run scan of all wireless access points
