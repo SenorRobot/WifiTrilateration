@@ -180,6 +180,13 @@ def PosEstimate():
 		ptGuess = np.array([recentScan[mac][1],recentScan[mac][2]])
 	point= optimize.leastsq(calcResiduals, ptGuess, args = (xi,yi,radii))
 	print point
+	#Broadcast Pt as a transform?
+	bc = tf.TransformBroadcaster()
+	bc.sendTransform((point[0][0],point[0][1],0),
+			tf.transformations.quaternion_from_euler(0,0,0),
+			rospy.Time.now(),
+			"wifiLoc",
+			"odom")
     	return
 
 def listener():
