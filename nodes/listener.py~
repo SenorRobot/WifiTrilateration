@@ -10,10 +10,20 @@ import tf
 #global dictionary used here
 apData = dict() #Storage of scan information
 apLocs = dict() #storage of locations
+counter = 0 #counter of scans for diagnostic info
+recentScan = dict()
 
 def callback(data):
 	#this means data has been obtained from the listener
 	#parse data into components and place in dictionary
+    	if(data=="END_SCAN"):
+		counter+=1
+		copyAps = dict(apLocs)
+		copyAps = mergeAPs()
+		broadcastAPs(copyAps)
+		#PosEstimate()
+		recentScan.clear()
+		return
 	dataInfo=data.data.split()
 	mac=dataInfo[0]
 	dataTuple=tuple(dataInfo[1:6])
@@ -26,13 +36,11 @@ def callback(data):
 	else:
 		#mac address is new
 		apData[mac]=[dataTuple]
+	recentScan[mac] = [dataTuple]
 	#print apData[mac]
 	#now perform the analysis on each of the ap entries
 	pointNum=len(apData[mac])
 	calcAPLocation(mac, pointNum)
-	copyAps = dict(apLocs)
-	copyAps=mergeAPs()
-	broadcastAPs(copyAps)
 
 def loadFileData(filename):
 	rospy.init_node('listener', anonymous=True)	
@@ -94,8 +102,7 @@ def calcAPLocation(mac,pointNum):
 		#print point
 		apLocs[mac] = [0,0,0]
 		apLocs[mac][0]=point[0][0]
-		apLocs[mac][1]=point[0][1]
-	print "\n"	
+		apLocs[mac][1]=point[0][1]	
 	
 
 
@@ -127,8 +134,6 @@ def calcResiduals(ptGuess, xi, yi, radii):
 def mergeAPs():
 	#go through all mac addresses in dictionary
 	copyAps=dict(apLocs)
-	print "Pre-Merge:\n"
-	print copyAps
 	for mac in copyAps.keys():
 		for mac2 in copyAps.keys():
 			#If same except last 4 bits(last hex char)
@@ -141,8 +146,7 @@ def mergeAPs():
 						copyAps[mac][2] = (apLocs[mac][2]+apLocs[mac2][2])/2.0
 						#remove mac2
 						copyAps.pop(mac2)
-						print "Merged {0} into {1}\n".format(mac2,mac)
-	print "Post-Merge\n"
+	print "Scan {0}\n".format(counter)
 	print copyAps
 	print "-------------------------------------------\n"
 	print "-------------------------------------------\n"
@@ -159,6 +163,31 @@ def broadcastAPs(copyAps):
 				mac,
 				"odom")
 	return
+
+#Take the most recent scan results and use as a means of comparison to estimate the robot's location.
+def PosEstimate():
+    #copyAps contains a list of all the transforms aka AP Estimates
+    #Take most recent scan results.
+    #Iterate through all data in that scan, get the distances
+	#also go through copyAps to get the locations to use as x,y coords
+	xi = []
+	yi = []
+	radii = []
+	for mac in recentScan.keys():
+		xi.append(copyAps[mac][0])
+		yi.append(copyAps[mac][1])
+		radii.append(recentScan[mac][0])
+		ptGuess = np.array([recentScan[mac][1],recentScan[mac][2]])
+	point= optimize.leastsq(calcResiduals, ptGuess, args = (xi,yi,radii))
+	print point
+	#Broadcast Pt as a transform?
+	bc = tf.TransformBroadcaster()
+	bc.sendTransform((point[0][0],point[0][1],0),
+			tf.transformations.quaternion_from_euler(0,0,0),
+			rospy.Time.now(),
+			"wifiLoc",
+			"odom")
+    	return
 
 def listener():
     rospy.init_node('listener', anonymous=True)

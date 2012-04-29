@@ -87,7 +87,7 @@ def scanLoop():
 				pub.publish(String(str))
 				fout.write(str)
 			else: counter+=1
-		pub.public(String("END SCAN"))
+		pub.publish(String("END SCAN"))
 		#Just for testing, replace with distance/speed based loop interval		
 		#rospy.sleep(1.0)
 		rate.sleep();
