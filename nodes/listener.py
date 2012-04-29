@@ -10,7 +10,7 @@ import tf
 #global dictionary used here
 apData = dict() #Storage of scan information
 apLocs = dict() #storage of locations
-counter=0 #counter of scans for diagnostic info
+counter= 0 #counter of scans for diagnostic info
 
 def callback(data):
 	#this means data has been obtained from the listener
@@ -140,8 +140,8 @@ def mergeAPs():
 						copyAps[mac][2] = (apLocs[mac][2]+apLocs[mac2][2])/2.0
 						#remove mac2
 						copyAps.pop(mac2)
-	print "Scan {0}\n".format(counter)
-	counter+=1
+	#print "Scan {0}\n".format(counter)
+	#counter+=1
 	print copyAps
 	print "-------------------------------------------\n"
 	print "-------------------------------------------\n"
@@ -156,7 +156,8 @@ def broadcastAPs(copyAps):
 				tf.transformations.quaternion_from_euler(0,0,0),
 				rospy.Time.now(),
 				mac,
-				"odom")
+				"/odom")
+		print "Broadcast mac:{0} at {1},{2}\n".format(mac,copyAps[mac][0],copyAps[mac][1]) 
 	return
 
 def listener():
@@ -165,5 +166,6 @@ def listener():
     rospy.spin()
 
 if __name__ == '__main__':
+    counter=0
     listener()
     #loadFileData("test1.txt")
