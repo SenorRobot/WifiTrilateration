@@ -77,9 +77,9 @@ def scanLoop():
 				signal=int(lineInfo[2])
 				#signal strength: Current calibration is -39 - (3*m)
 				if signal == 100:
-					signal=1 #above this dbm is assumed to be right at the AP
+					signal=2 #above this dbm is assumed to be right at the AP
 				else:
-					signal = 1 + (100-signal)/8
+					signal = 2 + (100-signal)/5
 				#print "Signal {0} = {1}m".format(lineInfo[2],signal) #Test output
 				ssid=lineInfo[4]
 				#format and publish to ros topic
