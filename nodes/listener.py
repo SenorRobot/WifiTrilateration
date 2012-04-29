@@ -21,7 +21,7 @@ def callback(data):
 		copyAps = dict(apLocs)
 		copyAps = mergeAPs()
 		broadcastAPs(copyAps)
-		#PosEstimate()
+		PosEstimate()
 		recentScan.clear()
 		return
 	dataInfo=data.data.split()
