@@ -20,6 +20,7 @@ def callback(data):
 	dataTuple=tuple(dataInfo[1:6])
 	#dataTuple is in format
 	#(signalStrength, x, y ,z, bssid)
+	dataTuple[0] = 3 + (100-dataTuple[0])/3
 	#global apData
 	if mac in apData:
 		#data for key/mac address exists

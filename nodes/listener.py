@@ -18,9 +18,9 @@ def callback(data):
 	dataInfo=data.data.split()
 	mac=dataInfo[0]
 	dataTuple=tuple(dataInfo[1:6])
-	dataTuple[0] = 3 + (100-dataTuple[0])/3
 	#dataTuple is in format
 	#(signalStrength, x, y ,z, bssid)
+	dataTuple[0] = 3 + (100-int(dataTuple[0]))/3
 	#global apData
 	if mac in apData:
 		#data for key/mac address exists
