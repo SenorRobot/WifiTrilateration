@@ -43,8 +43,9 @@ def scanLoop():
 		z=0.0
 	#Get from vehicle
 		try:
-			listener.waitForTransform('/wifiAntenna','/odom',rospy.Time(0), rospy.Duration(3))
-			(trans,rot) = listener.lookupTransform('/wifiAntenna','/odom',rospy.Time(0))
+			while(!listener.waitForTransform('/wifiAntenna','/map',rospy.Time(0), rospy.Duration(3))):
+				print "Waiting on /map"
+			(trans,rot) = listener.lookupTransform('/wifiAntenna','/map',rospy.Time(0))
 			print("started!\n")
 			print trans
 			x=trans[0]

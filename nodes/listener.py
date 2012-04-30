@@ -20,6 +20,7 @@ def callback(data):
 	#dataTuple=tuple(dataInfo[1:6])
 	#dataTuple is in format
 	#(signalStrength, x, y ,z, bssid)
+	#print dataInfo
 	dataInfo[1] = 3 + (100-int(dataInfo[1]))/3
 	#global apData
 	dataTuple=tuple(dataInfo[1:6])
@@ -98,7 +99,7 @@ def calcAPLocation(mac,pointNum):
 		apLocs[mac] = [0,0,0]
 		apLocs[mac][0]=point[0][0]
 		apLocs[mac][1]=point[0][1]
-	print "\n"	
+	#print "\n"	
 	
 
 
@@ -144,9 +145,9 @@ def mergeAPs():
 						copyAps.pop(mac2)
 	#print "Scan {0}\n".format(counter)
 	#counter+=1
-	print copyAps
-	print "-------------------------------------------\n"
-	print "-------------------------------------------\n"
+	#print copyAps
+	#print "-------------------------------------------\n"
+	#print "-------------------------------------------\n"
 	return copyAps
 
 #Broadcast all of the access point locations
@@ -158,7 +159,7 @@ def broadcastAPs(copyAps):
 				tf.transformations.quaternion_from_euler(0,0,0),
 				rospy.Time.now(),
 				mac,
-				"/odom")
+				"/map")
 		print "Broadcast mac:{0} at {1},{2}\n".format(mac,copyAps[mac][0],copyAps[mac][1]) 
 	return
 
