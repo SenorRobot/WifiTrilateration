@@ -42,9 +42,17 @@ def scanLoop():
 		y=0.0
 		z=0.0
 	#Get from vehicle
+		flag=0
+		while flag==0:
+			try:
+				listener.waitForTransform('/wifiAntenna','/map',rospy.Time(0), rospy.Duration(10))
+				flag=1
+			except tf.Exception:
+				print "Parsescan waiting on transform to map"
+				continue
+			
+			
 		try:
-			while(!listener.waitForTransform('/wifiAntenna','/map',rospy.Time(0), rospy.Duration(3))):
-				print "Waiting on /map"
 			(trans,rot) = listener.lookupTransform('/wifiAntenna','/map',rospy.Time(0))
 			print("started!\n")
 			print trans
