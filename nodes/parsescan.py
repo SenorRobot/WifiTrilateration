@@ -76,7 +76,7 @@ def scanLoop():
 				mac=lineInfo[0]
 				signal=int(lineInfo[2])
 				#signal strength: Current calibration is -39 - (3*m)
-				signal = 3 + (100-signal)/3
+				#signal = 3 + (100-signal)/3
 				#print "Signal {0} = {1}m".format(lineInfo[2],signal) #Test output
 				ssid=lineInfo[4]
 				#format and publish to ros topic

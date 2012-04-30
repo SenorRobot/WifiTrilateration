@@ -18,6 +18,7 @@ def callback(data):
 	dataInfo=data.data.split()
 	mac=dataInfo[0]
 	dataTuple=tuple(dataInfo[1:6])
+	dataTuple[0] = 3 + (100-dataTuple[0])/3
 	#dataTuple is in format
 	#(signalStrength, x, y ,z, bssid)
 	#global apData
