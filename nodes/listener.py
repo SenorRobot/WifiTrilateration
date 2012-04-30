@@ -17,11 +17,12 @@ def callback(data):
 	#parse data into components and place in dictionary
 	dataInfo=data.data.split()
 	mac=dataInfo[0]
-	dataTuple=tuple(dataInfo[1:6])
+	#dataTuple=tuple(dataInfo[1:6])
 	#dataTuple is in format
 	#(signalStrength, x, y ,z, bssid)
-	dataTuple[0] = 3 + (100-int(dataTuple[0]))/3
+	dataInfo[1] = 3 + (100-int(dataInfo[1]))/3
 	#global apData
+	dataTuple=tuple(dataInfo[1:6])
 	if mac in apData:
 		#data for key/mac address exists
 		apData[mac].append(dataTuple)
