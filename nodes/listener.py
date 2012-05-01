@@ -90,6 +90,9 @@ def calcAPLocation(mac,pointNum):
 		#Now that we have the center, we can do least squares
 		#generate point guess starting at avg of circles
 		ptGuess = np.array([avgX,avgY])
+		#If a current location already exist for the ap, use that as the guess
+		if mac in apLocs:
+			ptGuess = np.array([apLocs[mac][0],apLocs[mac][1]])
 		#Convert arrays to type used by least squares
 		#xi_p = np.array(xi)
 		#yi_p = np.array(yi)

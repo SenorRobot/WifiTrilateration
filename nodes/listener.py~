@@ -159,7 +159,7 @@ def broadcastAPs(copyAps):
 				tf.transformations.quaternion_from_euler(0,0,0),
 				rospy.Time.now(),
 				mac,
-				"/odom")
+				"/map")
 		print "Broadcast mac:{0} at {1},{2}\n".format(mac,copyAps[mac][0],copyAps[mac][1]) 
 	return
 
