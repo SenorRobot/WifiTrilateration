@@ -48,7 +48,7 @@ def scanLoop():
 				listener.waitForTransform('/wifiAntenna','/map',rospy.Time(0), rospy.Duration(10))
 				flag=1
 			except tf.Exception:
-				print "Parsescan waiting for map"
+				print "Parsescan waiting on transform to map"
 				continue
 			
 			

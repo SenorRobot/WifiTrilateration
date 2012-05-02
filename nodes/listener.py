@@ -20,8 +20,23 @@ def callback(data):
 	#dataTuple=tuple(dataInfo[1:6])
 	#dataTuple is in format
 	#(signalStrength, x, y ,z, bssid)
-	#print dataInfo
+	#Linear Model
 	dataInfo[1] = 3 + (100-int(dataInfo[1]))/3
+
+	#Quadratic Model
+	#dataInfo[1] = 3 + ((100-int(dataInfo[1]))/5)**2
+
+	#Piecewise Model
+	#if(int(dataInfo[1]) == 100):
+	#	dataInfo[1] = 3
+	#elif(int(dataInfo[1]) >= 70):
+	#	dataInfo[1] = 3 + (100-int(dataInfo[1]))/5
+	#else: #Quadratic part?
+	#	dataInfo[1] = 9 + ((100-int(dataInfo[1]))/5)**2
+
+	#Model based on the 3 access points we know of
+	
+
 	#global apData
 	dataTuple=tuple(dataInfo[1:6])
 	if mac in apData:

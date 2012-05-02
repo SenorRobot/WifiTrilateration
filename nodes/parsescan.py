@@ -45,15 +45,15 @@ def scanLoop():
 		flag=0
 		while flag==0:
 			try:
-				listener.waitForTransform('/wifiAntenna','/map',rospy.Time(0), rospy.Duration(10))
+				listener.waitForTransform('/wifiAntenna','/odom',rospy.Time(0), rospy.Duration(10))
 				flag=1
 			except tf.Exception:
-				print "Parsescan waiting on transform to map"
+				print "Parsescan waiting on transform to odom"
 				continue
 			
 			
 		try:
-			(trans,rot) = listener.lookupTransform('/wifiAntenna','/map',rospy.Time(0))
+			(trans,rot) = listener.lookupTransform('/wifiAntenna','/odom',rospy.Time(0))
 			print("started!\n")
 			print trans
 			x=trans[0]
