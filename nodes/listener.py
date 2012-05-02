@@ -37,7 +37,15 @@ def callback(data):
 	#Model based on the 3 access points we know of
 	
 
-	#global apData
+	#Convert location from odom -> map
+	listener = tf.TransformListener()
+	try:
+		(trans,rot) = listener.lookupTransform('/map', '/wifiAntenna', rospy.Time(0))
+	except (tf.LookupException, tf.ConnectivityException):
+		trans = (0,0,0)
+	dataInfo[2]=trans[0]
+	dataInfo[3]=trans[1]
+	dataInfo[4]=trans[2]
 	dataTuple=tuple(dataInfo[1:6])
 	if mac in apData:
 		#data for key/mac address exists
