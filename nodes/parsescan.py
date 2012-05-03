@@ -42,30 +42,21 @@ def scanLoop():
 		y=0.0
 		z=0.0
 	#Get from vehicle
-		flag=0
-		while flag==0:
-			try:
-				listener.waitForTransform('/wifiAntenna','/odom',rospy.Time(0), rospy.Duration(10))
-				flag=1
-			except tf.Exception:
-				print "Parsescan waiting on transform to odom"
-				continue
-			
-			
 		try:
-			(trans,rot) = listener.lookupTransform('/wifiAntenna','/odom',rospy.Time(0))
+			listener.waitForTransform('/wifiAntenna','/map',rospy.Time(0), rospy.Duration(3))
+			(trans,rot) = listener.lookupTransform('/wifiAntenna','/map',rospy.Time(0))
 			print("started!\n")
 			print trans
 			x=trans[0]
 			y=trans[1]
 			z=trans[2]
-		except (tf.LookupException, tf.ConnectivityException):
+		except (tf.LookupException, tf.ConnectivityException, tf.Exception):
 			continue
 		
 	#Run scan of all wireless access points
 		#os.system("sudo wpa_cli scan") #force refresh of scan
 		#os.system("sudo wpa_cli scan_results > scanout.txt")
-		os.system("sudo iwlist wlan1 scanning | python ~/ros/wifiScanner/nodes/iwlistparse.py > scanout.txt")
+		os.system("sudo iwlist wlan1 scanning | python iwlistparse.py > scanout.txt")
 		#Parse the output
 		#open file into lines
 		f = open('scanout.txt')
@@ -84,8 +75,6 @@ def scanLoop():
 				#	print lineInfo[4] #BSSID
 				mac=lineInfo[0]
 				signal=int(lineInfo[2])
-				#signal strength: Current calibration is -39 - (3*m)
-				#signal = 3 + (100-signal)/3
 				#print "Signal {0} = {1}m".format(lineInfo[2],signal) #Test output
 				ssid=lineInfo[4]
 				#format and publish to ros topic
@@ -93,6 +82,7 @@ def scanLoop():
 				pub.publish(String(str))
 				fout.write(str)
 			else: counter+=1
+		pub.publish(String("END_SCAN"))
 		#Just for testing, replace with distance/speed based loop interval		
 		#rospy.sleep(1.0)
 		rate.sleep();

@@ -10,56 +10,56 @@ import tf
 #global dictionary used here
 apData = dict() #Storage of scan information
 apLocs = dict() #storage of locations
-counter= 0 #counter of scans for diagnostic info
+counter = 0 #counter of scans for diagnostic info
+recentScan = dict()
 
 def callback(data):
 	#this means data has been obtained from the listener
 	#parse data into components and place in dictionary
-	dataInfo=data.data.split()
-	mac=dataInfo[0]
-	#dataTuple=tuple(dataInfo[1:6])
-	#dataTuple is in format
-	#(signalStrength, x, y ,z, bssid)
-	#Linear Model
-	dataInfo[1] = 3 + (100-int(dataInfo[1]))/3
-
-	#Quadratic Model
-	#dataInfo[1] = 3 + ((100-int(dataInfo[1]))/5)**2
-
-	#Piecewise Model
-	#if(int(dataInfo[1]) == 100):
-	#	dataInfo[1] = 3
-	#elif(int(dataInfo[1]) >= 70):
-	#	dataInfo[1] = 3 + (100-int(dataInfo[1]))/5
-	#else: #Quadratic part?
-	#	dataInfo[1] = 9 + ((100-int(dataInfo[1]))/5)**2
-
-	#Model based on the 3 access points we know of
-	
-
-	#Convert location from odom -> map
-	listener = tf.TransformListener()
-	try:
-		(trans,rot) = listener.lookupTransform('/map', '/wifiAntenna', rospy.Time(0))
-	except (tf.LookupException, tf.ConnectivityException):
-		trans = (0,0,0)
-	dataInfo[2]=trans[0]
-	dataInfo[3]=trans[1]
-	dataInfo[4]=trans[2]
-	dataTuple=tuple(dataInfo[1:6])
-	if mac in apData:
-		#data for key/mac address exists
-		apData[mac].append(dataTuple)
+    	if(data.data=="END_SCAN"):
+		global counter
+		counter+=1
+		copyAps = dict(apLocs)
+		copyAps = mergeAPs()
+		broadcastAPs(copyAps)
+		PosEstimate()
+		recentScan.clear()
+		return
 	else:
-		#mac address is new
-		apData[mac]=[dataTuple]
-	#print apData[mac]
-	#now perform the analysis on each of the ap entries
-	pointNum=len(apData[mac])
-	calcAPLocation(mac, pointNum)
-	copyAps = dict(apLocs)
-	copyAps=mergeAPs()
-	broadcastAPs(copyAps)
+		#this means data has been obtained from the listener
+		#parse data into components and place in dictionary
+		dataInfo=data.data.split()
+		mac=dataInfo[0]
+		#dataTuple=tuple(dataInfo[1:6])
+		#dataTuple is in format
+		#(signalStrength, x, y ,z, bssid)
+		#Linear Model
+		dataInfo[1] = 3 + (100-int(dataInfo[1]))/3
+
+		#Quadratic Model
+		#dataInfo[1] = 3 + ((100-int(dataInfo[1]))/5)**2
+
+		#Piecewise Model
+		#if(int(dataInfo[1]) == 100):
+		# dataInfo[1] = 3
+		#elif(int(dataInfo[1]) >= 70):
+		# dataInfo[1] = 3 + (100-int(dataInfo[1]))/5
+		#else: #Quadratic part?
+		# dataInfo[1] = 9 + ((100-int(dataInfo[1]))/5)**2
+
+		#Model based on the 3 access points we know of
+
+		if mac in apData:
+			#data for key/mac address exists
+			apData[mac].append(dataTuple)
+		else:
+			#mac address is new
+			apData[mac]=[dataTuple]
+		recentScan[mac] = [dataTuple]
+		#print apData[mac]
+		#now perform the analysis on each of the ap entries
+		pointNum=len(apData[mac])
+		calcAPLocation(mac, pointNum)
 
 def loadFileData(filename):
 	rospy.init_node('listener', anonymous=True)	
@@ -124,8 +124,7 @@ def calcAPLocation(mac,pointNum):
 		#print point
 		apLocs[mac] = [0,0,0]
 		apLocs[mac][0]=point[0][0]
-		apLocs[mac][1]=point[0][1]
-	#print "\n"	
+		apLocs[mac][1]=point[0][1]	
 	
 
 
@@ -169,11 +168,10 @@ def mergeAPs():
 						copyAps[mac][2] = (apLocs[mac][2]+apLocs[mac2][2])/2.0
 						#remove mac2
 						copyAps.pop(mac2)
-	#print "Scan {0}\n".format(counter)
-	#counter+=1
-	#print copyAps
-	#print "-------------------------------------------\n"
-	#print "-------------------------------------------\n"
+	print "Scan {0}\n".format(counter)
+	print copyAps
+	print "-------------------------------------------\n"
+	print "-------------------------------------------\n"
 	return copyAps
 
 #Broadcast all of the access point locations
@@ -185,9 +183,34 @@ def broadcastAPs(copyAps):
 				tf.transformations.quaternion_from_euler(0,0,0),
 				rospy.Time.now(),
 				mac,
-				"/map")
-		print "Broadcast mac:{0} at {1},{2}\n".format(mac,copyAps[mac][0],copyAps[mac][1]) 
+				"map")
 	return
+
+#Take the most recent scan results and use as a means of comparison to estimate the robot's location.
+def PosEstimate():
+    #copyAps contains a list of all the transforms aka AP Estimates
+    #Take most recent scan results.
+    #Iterate through all data in that scan, get the distances
+	#also go through copyAps to get the locations to use as x,y coords
+	xi = []
+	yi = []
+	radii = []
+	ptGuess = np.array([0,0])
+	for mac in recentScan.keys():
+		xi.append(copyAps[mac][0])
+		yi.append(copyAps[mac][1])
+		radii.append(recentScan[mac][0])
+		ptGuess = np.array([recentScan[mac][1],recentScan[mac][2]])
+	point= optimize.leastsq(calcResiduals, ptGuess, args = (xi,yi,radii))
+	print point
+	#Broadcast Pt as a transform?
+	bc = tf.TransformBroadcaster()
+	bc.sendTransform((point[0][0],point[0][1],0),
+			tf.transformations.quaternion_from_euler(0,0,0),
+			rospy.Time.now(),
+			"wifiLoc",
+			"map")
+    	return
 
 def listener():
     rospy.init_node('listener', anonymous=True)
@@ -195,6 +218,5 @@ def listener():
     rospy.spin()
 
 if __name__ == '__main__':
-    counter=0
     listener()
     #loadFileData("test1.txt")

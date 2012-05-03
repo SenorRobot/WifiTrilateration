@@ -40,7 +40,7 @@ def callback(data):
 	#Convert location from odom -> map
 	listener = tf.TransformListener()
 	try:
-		(trans,rot) = listener.lookupTransform('/base_link', '/map', rospy.Time(0))
+		(trans,rot) = listener.lookupTransform('/map', '/wifiAntenna', rospy.Time(0))
 	except (tf.LookupException, tf.ConnectivityException):
 		trans = (0,0,0)
 	dataInfo[2]=trans[0]
