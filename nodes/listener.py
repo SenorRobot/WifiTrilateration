@@ -24,12 +24,29 @@ def callback(data):
 		PosEstimate()
 		recentScan.clear()
 		return
+	#this means data has been obtained from the listener
+	#parse data into components and place in dictionary
 	dataInfo=data.data.split()
 	mac=dataInfo[0]
-	dataTuple=tuple(dataInfo[1:6])
+	#dataTuple=tuple(dataInfo[1:6])
 	#dataTuple is in format
 	#(signalStrength, x, y ,z, bssid)
-	#global apData
+	#Linear Model
+	dataInfo[1] = 3 + (100-int(dataInfo[1]))/3
+
+	#Quadratic Model
+	#dataInfo[1] = 3 + ((100-int(dataInfo[1]))/5)**2
+
+	#Piecewise Model
+	#if(int(dataInfo[1]) == 100):
+	# dataInfo[1] = 3
+	#elif(int(dataInfo[1]) >= 70):
+	# dataInfo[1] = 3 + (100-int(dataInfo[1]))/5
+	#else: #Quadratic part?
+	# dataInfo[1] = 9 + ((100-int(dataInfo[1]))/5)**2
+
+	#Model based on the 3 access points we know of
+
 	if mac in apData:
 		#data for key/mac address exists
 		apData[mac].append(dataTuple)
@@ -94,6 +111,9 @@ def calcAPLocation(mac,pointNum):
 		#Now that we have the center, we can do least squares
 		#generate point guess starting at avg of circles
 		ptGuess = np.array([avgX,avgY])
+		#If a current location already exist for the ap, use that as the guess
+		if mac in apLocs:
+			ptGuess = np.array([apLocs[mac][0],apLocs[mac][1]])
 		#Convert arrays to type used by least squares
 		#xi_p = np.array(xi)
 		#yi_p = np.array(yi)
@@ -161,7 +181,7 @@ def broadcastAPs(copyAps):
 				tf.transformations.quaternion_from_euler(0,0,0),
 				rospy.Time.now(),
 				mac,
-				"odom")
+				"map")
 	return
 
 #Take the most recent scan results and use as a means of comparison to estimate the robot's location.
@@ -186,7 +206,7 @@ def PosEstimate():
 			tf.transformations.quaternion_from_euler(0,0,0),
 			rospy.Time.now(),
 			"wifiLoc",
-			"odom")
+			"map")
     	return
 
 def listener():

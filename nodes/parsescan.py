@@ -43,8 +43,8 @@ def scanLoop():
 		z=0.0
 	#Get from vehicle
 		try:
-			listener.waitForTransform('/wifiAntenna','/odom',rospy.Time(0), rospy.Duration(3))
-			(trans,rot) = listener.lookupTransform('/wifiAntenna','/odom',rospy.Time(0))
+			listener.waitForTransform('/wifiAntenna','/map',rospy.Time(0), rospy.Duration(3))
+			(trans,rot) = listener.lookupTransform('/wifiAntenna','/map',rospy.Time(0))
 			print("started!\n")
 			print trans
 			x=trans[0]
@@ -75,11 +75,6 @@ def scanLoop():
 				#	print lineInfo[4] #BSSID
 				mac=lineInfo[0]
 				signal=int(lineInfo[2])
-				#signal strength: Current calibration is -39 - (3*m)
-				if signal == 100:
-					signal=1 #above this dbm is assumed to be right at the AP
-				else:
-					signal = 1 + (100-signal)/8
 				#print "Signal {0} = {1}m".format(lineInfo[2],signal) #Test output
 				ssid=lineInfo[4]
 				#format and publish to ros topic

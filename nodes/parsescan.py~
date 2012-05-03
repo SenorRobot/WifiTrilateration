@@ -43,8 +43,8 @@ def scanLoop():
 		z=0.0
 	#Get from vehicle
 		try:
-			listener.waitForTransform('/wifiAntenna','/odom',rospy.Time(0), rospy.Duration(3))
-			(trans,rot) = listener.lookupTransform('/wifiAntenna','/odom',rospy.Time(0))
+			listener.waitForTransform('/wifiAntenna','/map',rospy.Time(0), rospy.Duration(3))
+			(trans,rot) = listener.lookupTransform('/wifiAntenna','/map',rospy.Time(0))
 			print("started!\n")
 			print trans
 			x=trans[0]
@@ -87,7 +87,7 @@ def scanLoop():
 				pub.publish(String(str))
 				fout.write(str)
 			else: counter+=1
-		pub.public(String("END SCAN"))
+		pub.publish(String("END SCAN"))
 		#Just for testing, replace with distance/speed based loop interval		
 		#rospy.sleep(1.0)
 		rate.sleep();
