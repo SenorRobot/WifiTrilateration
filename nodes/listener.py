@@ -16,7 +16,8 @@ recentScan = dict()
 def callback(data):
 	#this means data has been obtained from the listener
 	#parse data into components and place in dictionary
-    	if(data=="END_SCAN"):
+    	if(data.data=="END_SCAN"):
+		global counter
 		counter+=1
 		copyAps = dict(apLocs)
 		copyAps = mergeAPs()
@@ -24,40 +25,41 @@ def callback(data):
 		PosEstimate()
 		recentScan.clear()
 		return
-	#this means data has been obtained from the listener
-	#parse data into components and place in dictionary
-	dataInfo=data.data.split()
-	mac=dataInfo[0]
-	#dataTuple=tuple(dataInfo[1:6])
-	#dataTuple is in format
-	#(signalStrength, x, y ,z, bssid)
-	#Linear Model
-	dataInfo[1] = 3 + (100-int(dataInfo[1]))/3
-
-	#Quadratic Model
-	#dataInfo[1] = 3 + ((100-int(dataInfo[1]))/5)**2
-
-	#Piecewise Model
-	#if(int(dataInfo[1]) == 100):
-	# dataInfo[1] = 3
-	#elif(int(dataInfo[1]) >= 70):
-	# dataInfo[1] = 3 + (100-int(dataInfo[1]))/5
-	#else: #Quadratic part?
-	# dataInfo[1] = 9 + ((100-int(dataInfo[1]))/5)**2
-
-	#Model based on the 3 access points we know of
-
-	if mac in apData:
-		#data for key/mac address exists
-		apData[mac].append(dataTuple)
 	else:
-		#mac address is new
-		apData[mac]=[dataTuple]
-	recentScan[mac] = [dataTuple]
-	#print apData[mac]
-	#now perform the analysis on each of the ap entries
-	pointNum=len(apData[mac])
-	calcAPLocation(mac, pointNum)
+		#this means data has been obtained from the listener
+		#parse data into components and place in dictionary
+		dataInfo=data.data.split()
+		mac=dataInfo[0]
+		#dataTuple=tuple(dataInfo[1:6])
+		#dataTuple is in format
+		#(signalStrength, x, y ,z, bssid)
+		#Linear Model
+		dataInfo[1] = 3 + (100-int(dataInfo[1]))/3
+
+		#Quadratic Model
+		#dataInfo[1] = 3 + ((100-int(dataInfo[1]))/5)**2
+
+		#Piecewise Model
+		#if(int(dataInfo[1]) == 100):
+		# dataInfo[1] = 3
+		#elif(int(dataInfo[1]) >= 70):
+		# dataInfo[1] = 3 + (100-int(dataInfo[1]))/5
+		#else: #Quadratic part?
+		# dataInfo[1] = 9 + ((100-int(dataInfo[1]))/5)**2
+
+		#Model based on the 3 access points we know of
+
+		if mac in apData:
+			#data for key/mac address exists
+			apData[mac].append(dataTuple)
+		else:
+			#mac address is new
+			apData[mac]=[dataTuple]
+		recentScan[mac] = [dataTuple]
+		#print apData[mac]
+		#now perform the analysis on each of the ap entries
+		pointNum=len(apData[mac])
+		calcAPLocation(mac, pointNum)
 
 def loadFileData(filename):
 	rospy.init_node('listener', anonymous=True)	
@@ -193,6 +195,7 @@ def PosEstimate():
 	xi = []
 	yi = []
 	radii = []
+	ptGuess = np.array([0,0])
 	for mac in recentScan.keys():
 		xi.append(copyAps[mac][0])
 		yi.append(copyAps[mac][1])

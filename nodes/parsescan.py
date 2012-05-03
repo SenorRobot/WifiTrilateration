@@ -56,7 +56,7 @@ def scanLoop():
 	#Run scan of all wireless access points
 		#os.system("sudo wpa_cli scan") #force refresh of scan
 		#os.system("sudo wpa_cli scan_results > scanout.txt")
-		os.system("sudo iwlist wlan1 scanning | python ~/ros/wifiScanner/nodes/iwlistparse.py > scanout.txt")
+		os.system("sudo iwlist wlan1 scanning | python iwlistparse.py > scanout.txt")
 		#Parse the output
 		#open file into lines
 		f = open('scanout.txt')
@@ -82,7 +82,7 @@ def scanLoop():
 				pub.publish(String(str))
 				fout.write(str)
 			else: counter+=1
-		pub.publish(String("END SCAN"))
+		pub.publish(String("END_SCAN"))
 		#Just for testing, replace with distance/speed based loop interval		
 		#rospy.sleep(1.0)
 		rate.sleep();
